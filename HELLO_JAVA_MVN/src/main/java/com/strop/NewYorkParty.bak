@@ -1,0 +1,51 @@
+/*******************************************************************************
+ * Copyright ©2002-2018 Skava.
+ * All rights reserved.The Skava system, including
+ * without limitation, all software and other elements
+ * thereof, are owned or controlled exclusively by
+ * Skava and protected by copyright, patent, and
+ * other laws. Use without permission is prohibited.
+ *
+ * For further information contact Skava at info@skava.com.
+ ******************************************************************************/
+package com.strop;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class NewYorkParty {
+
+  public static void main(String[] args) {
+    Scanner in = new Scanner(System.in);
+
+    System.out.println("Enter the number of house number");
+    int ni = in.nextInt();
+
+    System.out.println("Enter the house party number");
+    int[] na = new int[ni];
+    int[] cl = new int[ni];
+    int[] odd = new int[ni];
+    int[] even = new int[ni];
+    
+    for (int i = 0; i < ni; i++) {
+      int t = in.nextInt();
+      na[i] = t;
+      cl[i] = t;
+    }
+    Arrays.sort(cl);
+    
+    setMap(sa, na);
+    System.out.println("Thanks for enter the details");
+    in.close();
+  }
+  
+  public static void setMap(int[] sa,int[] na) {
+    Map<Integer, Integer> intArr = new HashMap<Integer, Integer>();
+    for(int idx : na) {
+        Arrays.asList(sa).
+    }
+  }
+}

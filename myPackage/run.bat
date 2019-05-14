@@ -1,0 +1,3 @@
+java myPackage.Hello
+
+pause

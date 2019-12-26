@@ -14,3 +14,4 @@ style.innerHTML =
 	
 var ref = document.querySelector('script');
 ref.parentNode.insertBefore(style, ref);
+

@@ -1,0 +1,104 @@
+camel:
+  component:
+    servlet:
+      mapping:
+        contextPath: /storefront/*
+  springboot:
+    xmlRests: classpath:camel-rest/*-rest.xml
+    xmlRoutes: classpath:camel/**/*-routes.xml
+    jmx-enabled: true
+org:
+  apache:
+    camel:
+      jmx:
+        disabled: true
+server:
+  servlet:
+    contextPath: /orchestrationservices
+  ssl:
+    enabled: true
+    key-store: classpath:keystore/local.skavaone.com.jks
+    key-store-password: changeit
+    key-store-type: jks
+    key-alias: local.skavaone.com    
+  tomcat:
+    max-http-header-size: 18000
+skava:
+  loginCookieExpirationTime: 7200
+  guestCookieExpirationTime: 604800
+  cache-control:
+    loadCategory: max-age=86400
+    loadProductList: max-age=86400
+    loadProductById: max-age=86400
+    loadSearchList: max-age=86400
+    loadSuggestions: max-age=86400
+    loadProductBySemanticId: max-age=86400
+  component:
+    http: http4://dummy/?throwExceptionOnFailure=false&headerFilterStrategy=customHttpHeaderFilterStrategy
+    rabbitmq:
+      defaultExchange: camel.exchange
+      embedded: false
+      host: localhost
+      password: guest
+      port: 5672
+      username: guest
+      vhost: /
+  event:
+    deleteCustomerQueue: orchestration.deleteCustomerQueue
+    deleteCustomerRetryCount: 10
+    deleteCustomerRetryInterval: 6000
+  eventnotifier:
+    enabled: false
+  log:
+    enabled: false
+  redis:
+    enabled: true
+    expTimeToLive: 1800
+    host: localhost
+    port: 6379
+    prefix: local_sfo
+    url: ${skava.redis.host}:${skava.redis.port}
+  route:
+    ping: direct:restOrchestrationClientPing
+  filter:
+    enabled: true
+    restrictedHeaders:
+    - x-auth-token
+    - bearertoken
+    - x-session-id
+    - x-sk-sesssion-id
+  accessControl:
+    allowOrigin: '*'
+    allowMethods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS, CONNECT, PATCH
+    allowHeaders: Content-Type,multilevel,x-skava,x-b3-traceid,x-b3-spanid,x-api-key,x-version,locale
+    maxAge: 3600
+    exposeHeaders: '*'
+    allowCredentials: true
+  app:
+    version: 8.6.0
+spring:
+  additionalPackages:
+    scan: 
+  application:
+    name: orchestration
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.redisson.spring.starter.RedissonAutoConfiguration
+  cloud:
+    zookeeper:
+      config:
+        enabled: false
+        root: local
+      connect-string: localhost:2181
+      enabled: false
+  jmx:
+    enabled: false
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /storefront/v2/api-docs
+swagger:
+  server:
+    domain: localhost
+    scheme: https
+    port: 8080

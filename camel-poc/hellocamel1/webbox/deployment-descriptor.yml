@@ -1,0 +1,38 @@
+appconfig:
+  image: alpine
+  kubernetes:
+    pod:
+      jvm:
+        heap:
+        - "-Xms691m"
+        - "-Xmx691m"
+        - "-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/local/skava/logs/heapdump.hprof -XX:ErrorFile=/usr/local/skava/logs/heaperror.log"
+        mallocarenamax: 2
+        metaspace:
+        - "-XX:MetaspaceSize=115M"
+        - "-XX:MaxMetaspaceSize=230M"
+        others:
+        - "-XX:CompressedClassSpaceSize=77M"
+        - "-XX:ReservedCodeCacheSize=154M"
+        - "-XX:MaxDirectMemorySize=116M"
+        - "-Xverify:none"
+        stack:
+        - "-Xss256K"
+      resources:
+        limits:
+          cpu: 2000m
+          memory: 1536Mi
+        requests:
+          cpu: 2000m
+          memory: 1536Mi
+  zookeeper:
+    skava:
+      redis:
+        pool:
+          maxActive: 150
+          maxIdle: 150
+          minIdle: 150
+backendservers:
+- tomcat
+- rabbitmq
+- redis

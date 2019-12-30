@@ -1,0 +1,8 @@
+/target/
+/src/main/java/.swagger-codegen
+/src/main/resources/gen/
+/src/main/java/.swagger-codegen-ignore
+/.settings/org.eclipse.wst.common.project.facet.core.xml
+/.settings/org.sonarlint.eclipse.core.prefs
+/tools/jmeter-client
+/webbox/localhost-cloud-zookeeper.txt

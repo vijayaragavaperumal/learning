@@ -1,0 +1,172 @@
+micoservice:
+  endpoint: https://uat.skavacommerce.com
+cache:
+  dev:
+    enable: true
+camel:
+  messagehistory:
+    enabled: true
+  trace:
+    enabled: false
+  zipkin:
+    include-message-body-streams: true
+org:
+  apache:
+    camel:
+      jmx:
+        disabled: true
+server:
+  port: 8090
+  domain: local.skavaone.com
+  tomcat:
+    accesslog:
+      enabled: true
+      pattern: '%h %l %u %t "%r" %s %b %D'
+      directory: /tomcat
+    basedir: target/logs/
+skava:
+  cartOrchestrationProperties:
+    unpaidAmountThrushhold: 1
+  secretsmanager:
+    enabled: false
+    className: ''
+  redis:
+    cacheNames: sfo
+    clearCacheEventName: clear.cache.event
+    database: 0
+    embedded: false
+    enabled: false
+    expTimeTolive: 60
+    host: localhost
+    password: ''
+    port: 6381
+    timeout: 0
+    clusterEnabled: false
+    pool:
+      maxIdle: 50
+      minIdle: 50
+      maxActive: 50
+  component:
+    http: http4://dummy/?throwExceptionOnFailure=false&headerFilterStrategy=customHttpHeaderFilterStrategy
+    rabbitmq:
+      defaultExchange: camel.exchange
+      embedded: true
+      enabled: true
+      host: localhost
+      password: guest
+      port: 5673
+      username: guest
+      vhost: nameAlias
+  event:
+    deleteCustomerQueue: orchestration.deleteCustomerQueue
+    ecommTopic: ecomm
+    orchestration:
+      notification:
+        queueEndPoint: rabbitmq://${skava.component.rabbitmq.defaultExchange}?routingKey=${skava.event.orchestration.notification.queueName}&queue=${skava.event.orchestration.notification.queueName}&autoDelete=false&durable=true&skipExchangeDeclare=true&threadPoolSize=1&autoAck=false&automaticRecoveryEnabled=true&concurrentConsumers=5
+        queueName: orchestration.notification
+        routingKeys: user.*.#,order.*.#,loyalty.*.#
+    sendNotificationQueueEndPoint: rabbitmq://${skava.component.rabbitmq.defaultExchange}?routingKey=notificationQueue&queue=notificationQueue&skipExchangeDeclare=true&skipQueueDeclare=false&exchangePattern=InOnly&bridgeEndpoint=true&durable=true&autoDelete=false
+  services:
+    accounts:
+      contextPath: accountservices
+      url: ${micoservice.endpoint}
+      version: ''
+    address:
+      contextPath: addressservices
+      url: ${micoservice.endpoint}
+      version: ''
+    auth:
+      contextPath: authservices
+      url: ${micoservice.endpoint}
+      version: ''
+    cart:
+      contextPath: cartservices
+      url: ${micoservice.endpoint}
+      version: ''
+    catalog:
+      contextPath: catalogservices
+      url: ${micoservice.endpoint}
+      version: ''
+    foundation:
+      contextPath: foundationservices
+      url: ${micoservice.endpoint}
+      version: ''
+      cacheExpTime: 10800
+    inventory:
+      contextPath: inventoryservices
+      url: ${micoservice.endpoint}
+      version: ''
+    list:
+      contextPath: listservices
+      url: ${micoservice.endpoint}
+      version: ''
+    loyalty:
+      contextPath: loyaltyservices
+      url: ${micoservice.endpoint}
+      version: ''
+    merchandise:
+      contextPath: merchandiseservices
+      url: ${micoservice.endpoint}
+      version: ''
+    oms:
+      contextPath: omsservices
+      url: ${micoservice.endpoint}
+      version: ''
+    payment:
+      contextPath: paymentservices
+      url: ${micoservice.endpoint}
+      version: ''
+    price:
+      contextPath: priceservices
+      url: ${micoservice.endpoint}
+      version: ''
+    promotion:
+      contextPath: promotionservices
+      url: ${micoservice.endpoint}
+      version: ''
+    search:
+      contextPath: searchservices
+      url: ${micoservice.endpoint}
+      version: ''
+    shipping:
+      contextPath: shippingservices
+      url: ${micoservice.endpoint}
+      version: ''
+    subscription:
+      contextPath: subscriptionservices
+      url: ${micoservice.endpoint}
+      version: ''
+    tax:
+      contextPath: taxservices
+      url: ${micoservice.endpoint}
+      version: ''
+    user:
+      contextPath: userservices
+      url: ${micoservice.endpoint}
+      version: ''
+    feed:
+      contextPath: feedservices
+      url: ${micoservice.endpoint}
+      version: ''
+spring:
+  application:
+    name: orchestration
+  cloud:
+    zookeeper:
+      config:
+        enabled: false
+      enabled: false
+  profiles:
+    active: dev
+  jmx:
+    enabled: false
+  sleuth:
+    sampler:
+      probability: 1
+  zipkin:
+    base-url: http://localhost:9411/
+swagger:
+  server:
+    domain: ${server.domain}
+    scheme: https
+    port: ${server.port}

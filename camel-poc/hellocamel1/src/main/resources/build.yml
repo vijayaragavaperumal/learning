@@ -1,0 +1,29 @@
+#-------------------------------------------------------------------------------
+# Copyright ©2002-2018 Skava.
+# All rights reserved.The Skava system, including
+# without limitation, all software and other elements
+# thereof, are owned or controlled exclusively by
+# Skava and protected by copyright, patent, and
+# other laws. Use without permission is prohibited.
+#
+# For further information contact Skava at info@skava.com.
+#-------------------------------------------------------------------------------
+build:
+    platform: java
+    type: docker
+    version: 8.0.0
+    dbtype: NA
+    projecttype: orchestration
+    maillist: sf-orchestration-team@skava.com
+    deployplugins: false
+    plugins:
+      release:
+        -
+          version: 8.3.0.RELEASE
+          srcPath: "http://##JFROG_HOSTNAME##/artifactory/libs-release-local/com/skava/sfoextension/##VERSION##/sfoextension-##VERSION##.jar"
+          destPath: "/usr/local/skava/apps/plugins"
+      snapshot:
+        -
+          version: 8.3.0-SNAPSHOT
+          srcPath: "http://##JFROG_HOSTNAME##/artifactory/libs-snapshot-local/com/skava/sfoextension/##VERSION##/sfoextension-8.3.0-SNAPSHOT.jar"
+          destPath: "/usr/local/skava/apps/plugins"

@@ -1,0 +1,694 @@
+# basePath : deployment script will pre-pend the basepath value to each keys.
+# need to replace infra keys and generate a final zookeeper.txt file to upload.
+#
+# Following is the sample model to create a single zookeper property,
+# hystrix:
+#  command:
+#    user-key:
+#      circuitBreaker:
+#        requestVolumeThreshold:
+#            defaultValue:5 ----> Default value for the key
+#            description:some text ----> Description of the key explaining its usage and relvancy for the component
+#            allowedValues:["1","2"] -----> Optional List of allowed values for this component. 
+# From the above template following zookeeper structure will be genereated using the deployment scripts 
+# "<basepath>/<microservicename>/hystrix/command/user-key/circuitBreaker=requestVolumeThreshold=5"
+hystrix:
+  command:
+    user-key:
+      circuitBreaker:
+        requestVolumeThreshold:
+          defaultValue: 5
+          description: This property sets the minimum number of requests in a rolling window that will trip the circuit.
+          allowedValues: ["5","20"]
+        sleepWindowInMilliseconds:
+          defaultValue: 60000
+          description: This property sets the amount of time, after tripping the circuit, to reject requests before allowing attempts again to determine if the circuit should again be closed.
+          allowedValues: ["5000", "60000"]
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds:
+              defaultValue: 1000
+              description: This property sets the amount of time, after tripping the circuit, to reject requests before allowing attempts again to determine if the circuit should again be closed.
+              allowedValues: ["1000", "2000"]
+server:
+  servlet:
+    contextPath:
+      defaultValue: /orchestrationservices
+      description: By default, the context path is "/". If that’s not ideal and you need to change it – to something like /app_name, here’s the quick and simple way to do it via properties
+  tomcat:
+    accesslog:
+      enabled:
+        defaultValue: true
+        description: This property controls the tomcat logs for the boot application.
+        allowedValues:
+        - true
+        - false
+      pattern:
+        defaultValue: '%h %l %u %t "%r" %s %b %D'
+        description: This property is used to set the pattern for writing logs in tomcat
+        allowedValues: ["valid string value"]
+      directory:
+        defaultValue: /usr/local/skava/logs/orchestration/webserver
+        description: Directory in which log files are created. Can be absolute or relative to the Tomcat base dir
+        allowedValues: ["valid string value"]
+  ssl:
+    enabled:
+      defaultValue: true
+      description: This property controls the SSL configuration for the boot application.
+      allowedValues:
+      - true
+      - false
+    enabled-protocols:
+      defaultValue: TLSv1.2
+      description: This property holds the protocols enabled for this application, it takes comma separated values.
+      allowedValues:
+      - TLSv1.0,TLSv1.1,TLSv1.2
+    key-store:
+      defaultValue: ##ZK_CERT_NAME##
+      description: This property holds the keystore PrivateKeyEntry which will be used as the SSL certificate for the microservice.
+      allowedValues:
+      - Valid string - certificate location
+    key-store-password:
+      defaultValue: ##ZK_CERT_STORE_PASSWORD##
+      description: This property holds the keystore password for opening the keystore mentioned in key-store property.
+      allowedValues:
+      - Valid string - keystore password
+    key-store-type:
+      defaultValue: jks
+      description: This property holds the keystore type.
+      allowedValues:
+      - jks
+      - PKCS12
+    key-alias:
+      defaultValue: ##ZK_CERT_ALIAS_NAME##
+      description: This property holds the keystore alias name set during the import using keytool utility.
+      allowedValues:
+      - Valid string - alias name
+
+camel:
+  messagehistory:
+    enabled:
+      defaultValue: false
+      description: This property is used to enable the message history in camel
+      allowedValues: ["true", "false"]
+
+skava:
+  guestCookieExpirationTime:
+    defaultValue: 604800
+    description: This property is used to set guess cookie expiration time in seconds. 
+    allowedValues:
+      - valid long value
+  loginCookieExpirationTime:
+    defaultValue: 7200
+    description: This property is used to set login cookie expiration time in seconds. 
+    allowedValues:
+      - valid long value
+  authorization:
+    tokenSecret:
+      defaultValue: ##ZK_AUTHORIZATION_TOKEN_SECRET##
+      description: This property is used to denote the secret value for jwt 
+      allowedValues:
+      - valid string value
+  environment:
+    name:
+      defaultValue: ##ZK_SFO_ENV##
+      description: This property is used to denote the current environment
+      allowedValues: ["true", "false"]
+  secretsmanager:
+    enabled:
+      defaultValue: ##ZK_SECRET_MANAGER_ENABLE##
+      decription: This property is used to define the solr component is enabled
+      allowedValues:
+      - true
+      - false
+    className:
+      defaultValue: ''
+      description: this property is used to specify which class to be used for secret management
+      allowedValues:
+      - valid string value
+  log:
+    enabled:
+      defaultValue: true
+      description: This property is used to enable the log component
+      allowedValues: ["true", "false"]
+    fileAppenderEnabled:
+      defaultValue: true
+      description: This property is used to enable the file appender log
+      allowedValues: ["true", "false"]
+    fluentdAppenderEnabled:
+      defaultValue: false
+      description: This property is used to enable/disable the fluentd file appender log
+      allowedValues: ["true", "false"]
+    fluentdHost:
+      defaultValue: localhost
+      description: This property is used to set the hostname for fluentd server
+      allowedValues: ["valid domain"]
+    fluentdPort:
+      defaultValue: 24224
+      description: This property is used to set the port for fluentd server
+      allowedValues: ["valid integer value"]
+    fluentdPattern:
+      defaultValue: '%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${sys:PID} --- [ecommorchestration, %X{X-B3-TraceId}, %X{X-B3-SpanId}, %X{sessionId}, %X{userId}] [%t] %-40.40c{1.} : %m%n %xwEx'
+      description: This property is used to set the pattern for writing logs in fluentd server
+      allowedValues: ["valid string value"]
+    fluentdTagName:
+      defaultValue: ''
+      description: This property is used to set the tag name to be added in the logs
+      allowedValues: ["valid string value"]
+  cartOrchestrationProperties:
+    unpaidAmountThrushhold:
+      defaultValue: 1
+      description: This property is used to set allowed un paid amount thrush hold for cart
+      allowedValues: []
+  cache-control:
+    loadCategory:
+      defaultValue: no-cache; no-store;
+      description: This property holds the cache control header value to be returned for loadCategory call
+      allowedValues: ["no-cache; no-store;","max-age=900"]
+    loadProductList:
+      defaultValue: no-cache; no-store;
+      description: This property holds the cache control header value to be returned for loadProductList call
+      allowedValues: ["no-cache; no-store;","max-age=900"]
+    loadProductById:
+      defaultValue: no-cache; no-store;
+      description: This property holds the cache control header value to be returned for loadProductById call
+      allowedValues: ["no-cache; no-store;","max-age=900"]
+    loadSearchList:
+      defaultValue: no-cache; no-store;
+      description: This property holds the cache control header value to be returned for loadSearchList call
+      allowedValues: ["no-cache; no-store;","max-age=900"]
+    loadSuggestions:
+      defaultValue: no-cache; no-store;
+      description: This property holds the cache control header value to be returned for loadSuggestions call
+      allowedValues: ["no-cache; no-store;","max-age=900"]
+    loadProductBySemanticId:
+      defaultValue: no-cache; no-store;
+      description: This property holds the cache control header value to be returned for loadProductBySemanticId call
+      allowedValues: ["no-cache; no-store;","max-age=900"]
+  services:
+    auth:
+      contextPath:
+        defaultValue: authservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_AUTH_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    user:
+      contextPath:
+        defaultValue: userservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_CUSTOMER_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    cart:
+      contextPath:
+        defaultValue: cartservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_CART_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    subscription:
+      contextPath:
+        defaultValue: subscriptionservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_SUBSCRIPTION_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    address:
+      contextPath:
+        defaultValue: addressservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_ADDRESS_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    shipping:
+      contextPath:
+        defaultValue: shippingservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_SHIPPING_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    search:
+      contextPath:
+        defaultValue: searchservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_SEARCH_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    oms:
+      contextPath:
+        defaultValue: omsservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_ORDER_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    foundation:
+      contextPath:
+        defaultValue: foundationservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_FOUNDATION_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+      cacheExpTime:
+        description: store accociation cache expire time
+        allowedValues: [""]
+        defaultValue: 10800
+    payment:
+      contextPath:
+        defaultValue: paymentservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_PAYMENT_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    tax:
+      contextPath:
+        defaultValue: taxservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_TAX_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    price:
+      contextPath:
+        defaultValue: priceservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_PRICE_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    catalog:
+      contextPath:
+        defaultValue: catalogservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_CATALOG_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    accounts:
+      contextPath:
+        defaultValue: accountservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_ACCOUNT_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    inventory:
+      contextPath:
+        defaultValue: inventoryservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_INVENTORY_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    list:
+      contextPath:
+        defaultValue: listservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_LIST_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    loyalty:
+      contextPath:
+        defaultValue: loyaltyservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_LOYALTY_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    promotion:
+      contextPath:
+        defaultValue: promotionservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_PROMOTION_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    merchandise:
+      contextPath:
+        defaultValue: merchandiseservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_MERCHANDISE_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+    feed:
+      contextPath:
+        defaultValue: feedservices
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      url:
+        defaultValue: ##ZK_SERVICE_FEED_END_POINT##
+        description: Microservice url whole url can be pointed here
+        allowedValues: [""]
+      version:
+        description: Microservice version
+        allowedValues: [""]
+        defaultValue: ${skava.app.version}
+  redis:
+    pool:
+      minIdle:
+        defaultValue: 150
+        description: "Target for the minimum number of idle connections to maintain in the pool. This setting only has an effect if it is positive."
+        allowedValues:
+        - "valid int value"
+      maxIdle:
+        defaultValue: 150
+        description: "Maximum number of 'idle' connections in the pool. Use a negative value to indicate an unlimited number of idle connections."
+        allowedValues:
+        - "valid int value"
+      maxActive:
+        defaultValue: 150
+        description: "Maximum number of connections that can be allocated by the pool at a given time. Use a negative value for no limit."
+        allowedValues:
+        - "valid int value"
+    cacheNames:
+      defaultValue: sfo
+      description: This property is used to set the fully qualified name of the custom implementation class
+      allowedValues:
+      - valid string value
+    clearCacheEventName:
+      defaultValue: clear.cache.event
+      description: This property is used set the event name for cache clear operation
+      allowedValues:
+      - valid string value
+    database:
+      defaultValue: 0
+      description: Database index used by the connection factory
+      allowedValues:
+      - valid integer value
+    enabled:
+      defaultValue: true
+      description: This property is used to enable/disabled the redis component
+      allowedValues:
+      - true
+      - false
+    expTimeToLive:
+      defaultValue: 1800
+      description: This property is used to set the expiration time for redis messages in seconds
+      allowedValues:
+      - valid integer value
+    host:
+      defaultValue: ##ZK_REDIS_HOST##
+      description: Redis server host
+      allowedValues:
+      - valid string value
+    password:
+      defaultValue: ''
+      description: Login password of the redis server.
+      allowedValues:
+      - valid string value
+    port:
+      defaultValue: 6379
+      description: Redis server port
+      allowedValues:
+      - valid integer value
+    clusterEnabled:
+      defaultValue: ##ZK_REDIS_CLUSTER_ENABLE##
+      description: "Toggle cluster for Redis server"
+      allowedValues:
+      - "valid string value"
+    cluster:
+      maxRedirects:
+        defaultValue: 0
+        description: "Maximum number of redirects to follow when executing commands across the cluster."
+        allowedValues:
+        - "valid integer value"
+      nodes:
+        defaultValue: ##ZK_REDIS_CLUSTER_NODES_WITH_PORT##
+        description: "Comma-separated list of 'host:port' pairs to bootstrap from. This represents an 'initial' list of cluster nodes and is required to have at least one entry"
+        allowedValues:
+        - "valid string value and can be comma separated string for multiple values"
+    sentinel:
+      master:
+        defaultValue: ""
+        description: "Name of the Redis server."
+        allowedValues:
+        - "valid string value"
+      nodes:
+        defaultValue: ""
+        description: "Comma-separated list of 'host:port' pairs."
+        allowedValues:
+        - "valid string value and can be comma separated string for multiple values"
+    ssl:
+      defaultValue: false
+      description: "Enable/Disable Redis server ssl"
+      allowedValues:
+      - "valid string value"
+    timeout:
+      defaultValue: 36000
+      description: Connection timeout
+      allowedValues:
+      - valid integer value
+    url:
+      defaultValue: ##ZK_REDIS_HOST##:6379
+      description: Connection string
+      allowedValues:
+      - valid string value
+    prefix:
+      defaultValue: ${skava.environment.name}_${skava.redis.cacheNames}
+      description: cache prefix
+      allowedValues:
+      - valid string value
+  component:
+    http:
+      defaultValue: http4://dummy/?throwExceptionOnFailure=false&connectionsPerRoute=75&maxTotalConnections=1350&headerFilterStrategy=customHttpHeaderFilterStrategy
+
+      description: Camel http component and http client configuration
+      allowedValues:
+      - valid string value
+    rabbitmq:
+      host:
+        defaultValue: ##ZK_RABBITMQ_HOST##
+        description: This property is used for camel rabbitmq component host
+        allowedValues:
+        - localhost
+        - 127.0.0.1
+      port:
+        defaultValue: 5672
+        description: This property is used for camel rabbitmq component port
+        allowedValues:
+        - 5672
+      username:
+        defaultValue: ##ZK_RABBIT_MQ_USER_NAME##
+        description: This property is used for camel rabbitmq component username
+        allowedValues:
+        - guest
+      password:
+        defaultValue: ##ZK_RABBIT_MQ_PASSWORD##
+        description: This property is used for camel rabbitmq component password
+        allowedValues:
+        - guest
+      vhost:
+        defaultValue: ##ZK_RABBIT_MQ_VIRTUAL_HOST##
+        description: This property is used for camel rabbitmq component virtual host
+        allowedValues:
+        - /estage
+      defaultExchange:
+        defaultValue: camel.exchange
+        description: This property is used for camel rabbitmq component default exchange
+        allowedValues:
+        - camel.exchange
+  event:
+    deleteCustomerQueue:
+      defaultValue: orchestration.deleteCustomerQueue
+      description: This property is used for delete customer queue name
+      allowedValues:
+      - orchestration.deleteCustomerQueue
+    deleteCustomerRetryCount:
+      defaultValue: 10
+      description: This property is used for delete customer retry count
+      allowedValues:
+      - 10
+    deleteCustomerRetryInterval:
+      defaultValue: 600000
+      description: This property is used for delete customer retry interval on failure
+      allowedValues:
+      - 600000
+    ecommTopic:
+      defaultValue: ecomm
+      description: This property is used for publish/subscribe a topic by name
+      allowedValues:
+      - ecomm
+    sendNotificationQueueEndPoint:
+      defaultValue: rabbitmq://${skava.component.rabbitmq.defaultExchange}?routingKey=notificationQueue&queue=notificationQueue&skipExchangeDeclare=true&skipQueueDeclare=false&exchangePattern=InOnly&bridgeEndpoint=true&durable=true&autoDelete=false
+      description: This property is used for endpoint url for send notification messages o notification service via event
+      allowedValues:
+      - Endpoint url
+    orchestration:
+      notification:
+        queueName:
+          defaultValue: orchestration.notification
+          description: This property is used for queue name for receiving notification messages
+          allowedValues:
+          - orchestration.notification
+        routingKeys:
+          defaultValue: user.*.#,order.*.#,loyalty.*.#
+          description: This property is used as routing key for receiving notification messages from topic
+          allowedValues:
+          - Routing key pattern
+        queueEndPoint:
+          defaultValue: rabbitmq://${skava.component.rabbitmq.defaultExchange}?routingKey=${skava.event.orchestration.notification.queueName}&queue=${skava.event.orchestration.notification.queueName}&autoDelete=false&durable=true&skipExchangeDeclare=true&threadPoolSize=1&autoAck=false&automaticRecoveryEnabled=true&concurrentConsumers=5
+          description: This property is used for endpoint url for receiving notification messages
+          allowedValues:
+          - Endpoint url
+
+swagger:
+  server:
+    domain:
+      defaultValue: ##ZK_ORCHESTRATION_SWAGGER_HOST##
+      description: This property is used camel swagger to set the host for the application
+      allowedValues: ["valid domain"]
+    port:
+      defaultValue: ##ZK_ORCHESTRATION_SWAGGER_PORT##
+      description: This property is used camel swagger to set the port for the application
+      allowedValues: ["valid integer value"]
+    scheme:
+      defaultValue: https
+      description: This property is used camel swagger to set the port for the application
+      allowedValues: ["http", "https"]
+
+spring:
+  application:
+    name:
+      defaultValue: orchestration
+      description: This property is used to set the spring boot application name
+      allowedValues: ["valid string value"]
+  cloud:
+    zookeeper:
+      enabled:
+        defaultValue: true
+        description: this property is used to enable/disable the zookeeper server.
+        allowedValues: ["true", "false"]
+      connect-string:
+        defaultValue: localhost:2181
+        description: this property is used to located somewhere other than localhost:2181, the configuration is required to locate the server
+        allowedValues: ["localhost:2181", "127.0.0.1:2181"]
+      config:
+        enabled:
+          defaultValue: true
+          description: this property is used to enable/disable the zookeeper base path.
+          allowedValues: ["true", "false"]
+        root:
+          defaultValue: local
+          description: this property is used to enable/disable the zookeeper base path.
+          allowedValues: ["true", "false"]
+        watcher:
+          enabled:
+            defaultValue: true
+            description: this property is used to enable/disable the zookeeper watcher.
+            allowedValues: ["true", "false"]
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          defaultValue: prometheus
+          decription: This property is used to expose the management endpoints.
+          allowedValues: ["prometheus"]

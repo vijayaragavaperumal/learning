@@ -1,0 +1,523 @@
+swagger:
+  constant:
+    description: <h2><b>Orchestration</b></h2><p><b>Orchestration</b> is to handle
+      the interactions between different services in Service-Oriented Architecture.
+      Typically one controller that acts as the "orchestrator" of the overall service
+      interactions. This generally follows a request/response type pattern.</p><p>The
+      orchestration is to streamline and optimize frequent, repeatable processes to
+      ensure accurate,and quick end-to-end processing as services can be executed
+      in parallel/asynchronously.</p>
+    accounts:
+      buyerid:
+        description: Indicates a unique identifier of the buyer which is to be deleted.
+          This identifier is generated automatically when a buyer is created. In this,
+          the buyer identifier is different from the user identifier. Here, the buyer
+          identifier is generated when the user gets mapped to the team for an account.
+      id:
+        description: Refers to a unique identifier of the account to be loaded.
+      teamid:
+        description: Refers to a unique identifier of the team for the account.
+      addressid:
+        description: Refers to a unique identifier of the team for the account.
+      addressrequest:
+        description: Specifies the AddressDTO request object, which contains the
+          address details. The AddressDTO request is given in the form
+          of a JSON object. An incorrect JSON will display the "Bad Request"
+          error.
+      buyeruserid:
+        description: Refers to the user account ID of the buyer account.
+      rolename:
+        description: Refers to the name of a role assigned to a buyer account.
+      create:
+        description: Specifies the AccountCreateRequest request object, which contains
+          the account and customer information for creating an account. The AccountCreateRequest
+          request is given in the form of a JSON array object. An incorrect JSON array
+          will display the "Bad Request" error.
+      patch:
+        description: Specifies the TeamsRequest request object, which contains the
+          team and customer details. The TeamsRequest request is given in the form
+          of a JSON array object. An incorrect JSON array will display the "Bad Request"
+          error.
+      costCentreId:
+        description: Refers to the unique identifier of the cost center which is to
+          be retrieved. It is generated automatically when a cost center is created.
+          A valid cost center should be present for the given ID.
+      contractid:
+        description: Refers to a unique identifier of the contract for the account.
+      sort:
+        description: Refers to the sort parameter using which the response will be
+          sorted according to the given sort parameter.<br/><br/>For example,<br/><ul><li>id,ASC
+          - Sorts the response in the ascending order of the ID.</li><li>ID,DESC -
+          Sorts the response in the descending order of the ID.</li></ul>
+      budgetId:
+        description: Refers to the unique identifier of the budget which is to be
+          retrieved. The budget should be associated with the given cost center ID.
+          A valid budget should exist for the given budget ID.
+      budget:
+        create:
+          description: Specifies the BudgetRequest request object, which contains
+            the budget information for creating an budget. The BudgetRequest request
+            is given in the form of a JSON object. An incorrect JSON array will display
+            the "Bad Request" error.
+        patch:
+          description: Specifies the BudgetRequest request object, which contains
+            the budget information for updating an budget. The BudgetRequest request
+            is given in the form of a JSON object. An incorrect JSON array will display
+            the "Bad Request" error.
+      costcentre:
+        create:
+          description: Specifies the CostCentreRequest request object, which contains
+            the CostCentre information for creating an CostCentre. The CostCentreRequest
+            request is given in the form of a JSON object. An incorrect JSON array
+            will display the "Bad Request" error.
+        patch:
+          description: Specifies the CostCentersDTO request object, which contains
+            the CostCentre information for updating an CostCentre. The CostCentersDTO
+            request is given in the form of a JSON object. An incorrect JSON array
+            will display the "Bad Request" error.
+      filter:
+        description: |-
+          This field holds the simple query criteria (can be multiple) based on the available fields to limit returned results. Syntax of this parameter is <b>FIELDNAME</b><b> OP </b><b>VALUE</b>
+          <b>Example 1: </b> field1:value, field2:value
+          <b>Example 2: </b> field1>value
+          where: <ul><li><b> FIELDNAME</b> is the entity's attribute name as represented in the response object</li><li><b>OP</b> is the operation - Possible values includes<ul><li><i>LIKE(:) - Loads everything similar (like operation) to the given value.</i></li><li><i>GREATERTHAN (>) For integer values. Loads rows whose column(field) value is greater than the given value</i></li><li><i>LESSTHAN (<) or integer values -  For integer values. Loads rows whose column(field) value is less than the given value</i></li></ul></li><li><b>VALUE</b> is the value against which the operation has to be performed on the field</li></ul>Kindly note: <ul><li><i>filters</i> parameter can have multiple objects.</li><li>When multiple attributes are used in filter <i>AND</i> behavior is applied.</li></ul>
+    subscription:
+      patch:
+        id:
+          description: Indicates the ID of the subscription to be updated. Holds a string value.
+        request:
+          description: Contains the subscription and subscription related data. 
+               The field name is mandatory for both subscription and its related properties. 
+      get:
+        id:
+          description: Indicates the ID of the subscription to be fetched. Holds a string value.
+    loyalty:
+      create:
+        description: Specifies the LoyaltyRequestDTO request object, which contains the loyalty information for creating a loyalty. The LoyaltyRequestDTO request is given in the form of a JSON array object. An incorrect JSON array will display the “Bad Request” error.
+    cart:
+      cartType:
+        description: Refers to the type of cart. Currently, it supports only the USER
+          cart type. This is a mandatory parameter. It should not be null or empty.
+          There can be only one cart per cartType for a user.
+      effectiveOrderDate:
+        description: Indicates the timestamp of when the order has been created. The value is provided by the user. It cannot be null or empty. It accepts only a valid timestamp value.
+      itemId:
+        description: Indicates a unique identifier of the item on which the item operation
+          is performed. This is a mandatory parameter. It should not be null or empty.
+      paymentId:
+        description: Indicates a unique payment identifier specifying on which the
+          payment operation is performed. This is a mandatory parameter. It should
+          not be null or empty.
+      promocode:
+        description: Refers to the promocode. This is a mandatory parameter. It should
+          not be null or empty.
+      create:
+        description: Specifies the SFCart request, which contains the details to create
+          a cart for the customer based on the cart type. The value should be given
+          in the JSON format. An incorrect JSON object will display the "Bad Request"
+          error.
+      patch:
+        description: Specifies the SFCart request, which contains the details to update
+          a cart for the customer based on the cart type. The value should be given
+          in the JSON format. An incorrect JSON object will display the "Bad Request"
+          error.
+      item:
+        create:
+          description: Specifies the list of SFItem request, which contains the details
+            to add one or more items to a cart for the customer based on the cart
+            type. The value should be given in the JSON format. An incorrect JSON
+            object will display the "Bad Request" error.
+        patch:
+          description: Specifies the SFItem request, which contains the details to
+            update an item in a cart for the customer based on the cart type. The
+            value should be given in the JSON format. An incorrect JSON object will
+            display the "Bad Request" error.
+      payment:
+        create:
+          description: Specifies the Payment request, which contains the details to
+            add multiple payments for the customer based on the cart type. The value
+            should be given in the JSON format. An incorrect JSON object will display
+            the "Bad Request" error.
+        patch:
+          description: Specifies the list of Payments request, which contains the
+            details to update multiple payments for the customer based on the cart
+            type. The value should be given in the JSON format. An incorrect JSON
+            object will display the "Bad Request" error.
+        id:
+          patch:
+            description: Specifies the Payment request, which contains the details
+              to update a payment in a cart for the customer based on the cart type.
+              The value should be given in the JSON format. An incorrect JSON object
+              will display the "Bad Request" error.
+      promo:
+        create:
+          description: Specifies the list of PromotionCode request, which contains
+            the details to add multiple promocodes to a cart for the customer based
+            on the cart type. The value should be given in the JSON format. An incorrect
+            JSON object will display the "Bad Request" error.
+    catalog:
+      categoryId:
+        description: Refers to a unique identifier of the category.
+      facet:
+        description: Holds the value of facets to perform filtering on facets based
+          on this request. For example, <font face="courier">{facets:[{key:facet_brand,values:[nike,
+          puma]},{key:facet_size:values:[10, 15]}]}</font>
+      filter:
+        description: 'Holds the simple or complex query criteria based on the available
+          fields to filter and  return back the results. Syntax of this parameter
+          is {"filters":[{"field":"<b>FIELDNAME</b>","operation":"<b>OP</b>","value":"<b>VALUE</b>"}]}
+          where: <ul><li><b>FIELDNAME</b> is the entity''s attribute name as represented
+          in the response object</li><li><b>OP</b> is the operation - Possible values
+          includes<ul><li>EQUALS</i></li><li><i>EQUALS_IGNORECASE</i></li><li><i>GREATERTHAN</i></li><li><i>LESSTHAN</li><li>GREATHERTHANEQUAL</i></li><li><i>LESSTHANEQUAL</i></li><li><i>LIKE</i></li></ul></li><li><b>VALUE</b>
+          is the value against which the operation has to be performed on the field</li></ul>Note:
+          <ul><li>This parameter can have multiple objects.</li><li>When multiple
+          attributes are used in filter, <i>AND</i> behavior is applied.</li></ul>'
+      includeparent:
+        description: Indicates a response includes a parent category.
+      key:
+        description: It refers to the word to get the suggestion.Holds string value.
+      multilevel:
+        description: Refers to the category hierarchy level. The default value is
+          -1. The category list gets loaded based on the category hierarchy level.
+          The default category level is -1, which means that it returns all the category
+          list. For example, Mobiles and tablets are at the category level 0 and mobile
+          brand are at the category level 1, mobile cases are at the category level
+          2. If the given level given is -1 , then all the levels, that is, all the
+          category list will be loaded. If the level is mentioned as 1, only the mobile
+          brand category list will be loaded.
+      productId:
+        description: Refers to a unique identifier of the product.
+      searchTerm:
+        description: Holds the value to be searched in the products of a catalog.
+      semanticId:
+        description: Holds a semantic identifier associated to any category, product,
+          or SKU.
+      sort:
+        description: 'Refers to the sort parameter using which the response will be
+          sorted according to the given sort parameter. The syntax of this parameter
+          is: <font face="courier">{"sort":[{"field":"status","direction":"ASC"},
+          {"field":"status","direction":"DESC"}]}</font>.'
+    customer:
+      activationparam:
+        description: Refers to the activation parameter received through email or
+          SMS. There is no string validation occurs for the minimum and maximum lengths.
+      confirmpassword:
+        description: Refers to the password which must match with the new password
+          provided for password update.
+      delete:
+        addressid:
+          description: Indicates the ID of the address to be deleted. Holds a string
+            value.
+        paymentid:
+          description: Indicates the ID of payment to be deleted. Holds string value.
+      email:
+        description: Holds the string value. Refers the customer's valid email address.
+          It is used for customer registration and log in the customer. With this
+          value, a relevant identity will be created. The value should be unique within
+          a collection. It is an optional field. The minimum and the maximum length
+          of an email are validated by a regex. The regex is '^(.+)@(.+).$'.
+      get:
+        addressid:
+          description: Indicates the ID of the address to be fetched. Holds a string
+            value.
+        paymentid:
+          description: Indicates the ID of payment to be fetched. Holds a string value.
+      identity:
+        description: Holds a unique identity of the customer such as phone number,
+          email, etc.
+      userid:
+        description: Holds a unique identifier of the customer.
+      adminId:
+        description: Holds a unique identifier of the csr admin user.
+      isguest:
+        description: Holds a boolean value to specify whether the user is a guest user or not. 
+          The possible values are:<ul><li>`true` - Indicates that the user is a guest user.</li>
+          <li>`false` - Indicates that the user is not a guest user.</li></ul>
+      login:
+        identity:
+          description: Holds the value of the identity. The value can be email, phone,
+            token, numbers, etc. Using this, the customer request is made for login.
+            Either the email address or the phone number is set as identity when a
+            login request is made with the default identity type. For the custom login
+            such as SSO, this parameter can hold a unique identifier of the customer.
+            There is no specific validation occurs on this parameter.
+        password:
+          description: Holds the password of the customer login request. This is a
+            mandatory parameter for a default login made with email or phone. This
+            is an optional parameter for a custom login call.
+        sessionid:
+          description: Indicates the identifier of the user session. The session ID
+            will be generated as part of this request. It is an optional field.
+      newpassword:
+        description: Refers to the new password of the customer which resets the existing
+          password. Password must contain 1 uppercase, 1 special character and a numeric
+          value. Password validation is configurable in the collection attributes.
+          For example, <font face="courier">Sample@123</font>.
+      oldpassword:
+        description: Indicates the old password of the customer. This is a mandatory
+          field.
+      patch:
+        description: Specifies the CustomerUpdateRequest request, which contains the
+          customer information for the update request. The customer update request
+          is given in the form of a JSON array object. An incorrect JSON array will
+          display the "Bad Request" error.
+        addressid:
+          description: Indicates the ID of the address to be updated. Holds string
+            value.
+        paymentid:
+          description: Indicates the ID of payment to be updated. Holds string value.
+        password:
+          description: Specifies the CustomerUpdatePasswordRequest request object,
+            which contains the customer old password, new password and confirm passord
+            for update. The CustomerUpdatePasswordRequest request is given in the
+            form of a JSON array object. An incorrect JSON array will display the
+            "Bad Request" error.
+      phonenumber:
+        description: Holds the string value. Refers the customer's valid phone number.
+          It is used for customer registration and log in the customer. With this
+          value, a relevant identity will be created. The value should be unique within
+          a collection. This field should not be null or empty. The value is validated
+          by a regex. The regex is '[?\ (0-9?\ )]{3,20}$'.
+      resetparam:
+        description: Holds the string value. Refers to the reset parameter which is
+          received via email or SMS.
+      resetpassword:
+        description: Refers to the new password of the customer which resets the existing
+          password. Password must contain 1 Uppercase, 1 Special Character and numeric
+          value. Password validation is configurable in collection attributes.Eg:Test@123.
+      create:
+        description: Specifies the CustomerCreateRequest request, which contains the
+          customer information for the create request. The new customer create request
+          is given in the form of a JSON array object. An incorrect JSON array will
+          display the "Bad Request" error.
+      address:
+        create:
+          description: Specifies the CustomerAddresses request object, which contains
+            customer’s address details. The CustomerAddresses request is given in
+            the form of a JSON array object. For creating an address for a customer,
+            zipcode is mandatory. Other fields are optional in the request. An incorrect
+            JSON array will display the "Bad Request" error.
+        patch:
+          description: Specifies the CustomerAddresses request object, which contains
+            a customer’s address details. The CustomerAddresses request is given in
+            the form of a JSON array object. An incorrect JSON array will display
+            the "Bad Request" error.
+      logincreate:
+        description: Specifies the CustomerLoginRequest object, which contains the
+          customer identity information for login. It is given in the form of a JSON
+          array object. An incorrect JSON array will display the "Bad Request" error.
+      resetpost:
+        description: Specifies the CustomerResetPasswordRequest request object, which
+          contains the customer identity information for reset password. The CustomerResetPasswordRequest
+          request is given in the form of a JSON array object. An incorrect JSON array
+          will display the "Bad Request" error.
+        security:
+          description: Specifies the CustomerSecurityRequest request object, which
+            contains an email or phoneNumber, password, and security questions and
+            answers. The CustomerSecurityRequest request is given in the form of a
+            JSON array object. An incorrect JSON array will display the "Bad Request"
+            error.
+      resetpatch:
+        description: Specifies the CustomerValidatePasswordRequest request object,
+          which contains the customer information for validating reset password. The
+          CustomerValidatePasswordRequest request is given in the form of a JSON array
+          object. An incorrect JSON array will display the "Bad Request" error.
+        activation:
+          description: Specifies the CustomerActivationRequest request object,
+           which contains the customer activation param and password.
+      securitypost:
+        description: Specifies the CustomerGetSecurityQuestionRequest request object,
+          which contains the customer identity information for getting securtity questions.
+          The CustomerGetSecurityQuestionRequest request is given in the form of a
+          JSON array object. An incorrect JSON array will display the "Bad Request"
+          error.
+      payment:
+        create:
+          description: Specifies the CustomerPayments request object, which contains
+            payment details of the customer. The CustomerPayments request is given
+            in the form of a JSON array object. An incorrect JSON array will display
+            the "Bad Request" error.
+        patch:
+          description: Specifies the CustomerPayments request object, which contains
+            the payment details of the customer. The CustomerPayments request is given
+            in the form of a JSON array object. An incorrect JSON array will display
+            the "Bad Request" error.
+    list:
+      create:
+        description: Specifies the SFList request, which contains the details to create
+          a new list. The value should be given in the JSON format. An incorrect JSON
+          object will display the "Bad Request" error. The mandatory fields for creating
+          a list are name, type, and itemType fields.
+      patch:
+        description: Specifies the SFList request, which contains the details to update
+          an existing list.<br/><br/><ul><li>While updating a list, the name, type,
+          accessType, properties fields are editable and optional. The itemType field
+          is not editable.</li><li>Updating list items are not allowed.</li></ul><br/><br/>The
+          value should be given in the JSON format. An incorrect JSON object will
+          display the "Bad Request" error.
+      share:
+        description: Specifies the SFList request, which contains the details to share
+          an existing list. The value should be given in the JSON format. An incorrect
+          JSON object will display the "Bad Request" error.<br><br><b>Note:</b> While
+          sharing a list, the accessType should be PUBLIC.
+      listId:
+        add:
+          description: 'Indicates a unique valid list identifier. New items are added
+            to this list. This is a mandatory field. '
+        delete:
+          description: Indicates a unique valid ID of the list to be deleted. This
+            is a mandatory field.
+        description: Indicates a unique valid ID of the list to be loaded. This is
+          a mandatory field.
+        getall:
+          description: Indicates a unique valid list identifier. All the items are
+            loaded from this list. This is a mandatory field.
+        update:
+          description: Indicates a unique valid ID of the list to be updated. This
+            is a mandatory field.
+      listItemId:
+        description: Indicates a unique valid identifier of the item available in
+          the given list. This is a mandatory field.
+        create:
+          description: Specifies the SFListItem request, which contains the details
+            to add a new item(s) into the specified list. The value should be given
+            in the JSON format. For creating the list items, the key and name fields
+            are mandatory. An incorrect JSON object will display the "Bad Request"
+            error.
+        patch:
+          description: Specifies the SFListItem request, which contains the details
+            to update an existing item under the specified list. The value should
+            be given in the JSON format. The key and name fields are editable and
+            optional. An incorrect JSON object will display the "Bad Request" error.
+      name:
+        description: Denotes the name of the list based on which the lists can be
+          filtered out.
+      type:
+        description: Denotes the list type based on which the lists can be filtered
+          out.<br/><br/>The values can be any one of the following:<br/><br/><ul><li>WISHLIST
+          - The WISHLIST serves as a way for the customers to select and track their
+          desired items for purchase at a later date.</li><li>SAVEFORLATER - To wait
+          until another day to buy some of the items, then use SAVEFORLATER.</li><li>FAVOURITES
+          - When the type is mentioned as FAVOURITES, the customer selects the items
+          which they liked the most while logged in. Those items will be available
+          all the time in the site until removed.</li></ul>
+      page:
+        description: Denotes the page sequence of the list to move forward and backward.
+          The default value will be NEXT <br/><br/>The values can be any one of the
+          following:<br/><br/><ul><li>PREVIOUS - The list moves backwards with respect
+          to the given size.</li><li>RETAIN - The list sequence resets and initialized
+          list 1 to size.</li><li>NEXT - The list moves backwards with respect to
+          the given size.</li></ul>
+    locale:
+      description: 'Indicates the locale in which the API Response and error messages
+        will be responded in the locale mentioned in this parameter. The locale needs
+        to be mentioned in the <a href="http://www.oracle.com/technetwork/java/javase/java8locales-2095355.html">Java
+        standard locale format.</a> It is an optional parameter. The value can be
+        empty or nullable, both treated as not provided. The default value is default
+        locale of the provided collection.<br>Min length: 0<br>Max length: No max
+        length<br>For example: en_US'
+    oms:
+      post:
+        order:
+          description: Specifies the ReturnOrderInput request object, which contains
+            the reason details to return the order. It is given in the form of a JSON
+            array object. An incorrect JSON array will display the "Bad Request" error.
+          item:
+            description: Specifies the ReturnItemInput request object, which contains
+              the reason details to return the order item. It is given in the form
+              of a JSON array object. An incorrect JSON array will display the "Bad
+              Request" error.
+      cancel:
+        body:
+          description: Specifies the DeleteOrderInput request object, which contains
+            the reason details to cancel the order. It is given in the form of a JSON
+            array object. An incorrect JSON array will display the "Bad Request" error.
+        id:
+          description: Indicates the unique valid ID of the order to be canceled.
+        item:
+          id:
+            description: Indicates the unique valid ID of an order based on which
+              the order item will be canceled.
+          body:
+            description: Specifies the DeleteItemInput request object, which contains
+              the reason details to cancel the order item. It is given in the form
+              of a JSON array object. An incorrect JSON array will display the "Bad
+              Request" error.
+      filter:
+        description: Holds the filter criteria.<br/><ul><li>/orders/?filter=id:1 -
+          Returns 404 if the given order does't belong to the logged in user.</li><li>/orders/?filter=id:1,usertracking.firstname:name,usertracking.lastname:name,usertracking.zipcode:12341
+          - if &quot;lookup&quot; param is set to true and all the required filters
+          are passed, Login is not required. Returns 404 if the given filters doesn't
+          match.</li></ul><b>List of allowed filters:</b><br/><ol><li>id</li> <li>lastName</li><li>zipCode</li><li>createdTime</li><li>updatedTime</li><li>status</li><li>firstName</li></ol><b>Example
+          combinations:</b><ol><li>filter=id:1,lastname:name,zipcode:12341</li><li>filter=status:Submitted_to_Fulfilment</li><li>filter=createdTime>12345677811,createTime<141234123321</li><li>filter=updateTime>12345677811,createTime<141234123321</li><ol>
+      id:
+        description: Indicates a unique valid ID of the order to be loaded.Holds string
+          value.
+        return:
+          description: Indicates the unique valid ID of the order based on which the
+            order return operation will be performed.
+      itemId:
+        description: Indicates the unique valid ID of the item in the order.
+      lookup:
+        description: to lookup an order by passing the order id,firstname/lastname
+          and zipcode. These are the required filter fields to lookup an order by
+          a logged out user &lt;b>Login not required&lt;/b> or a Guest user
+      sort:
+        description: Holds the sorting parameter which contains the sorting property
+          name and the sorting order. It is case sensitive. For example:/orders?sort=createdtime:ASC&lt;br>Allowed
+          fields for sort:&lt;br>1. createdTime:ASC&lt;br>2. createdTime:DESC&lt;br>3.
+          updateTime:ASC&lt;br>4. updateTime:DESC&lt;br>
+      update:
+        description: Specifies the OrderUpdate request object, which contains the
+          order level update object. The order status and the reason for the update
+          is required.<br>The OrderUpdate request is given in the form of a JSON array
+          object. An incorrect JSON array will display the "Bad Request" error.
+        id:
+          description: Indicates a unique valid ID of the order based on which the
+            order return operation will be performed.
+    page:
+      description: The page number to be retrieved where the size of the page must
+        be specified by the size, offset, or pageSize parameter. The first page starts
+        with the value "1".
+    search:
+      didyoumean:
+        description: Indicates a response parameter for the Find All Indices call.
+          If a user gives an incorrect search term in the request, the correct term
+          will be responded in this param.
+      searchterm:
+        description: Holds the value to be searched in SOLR. If a searchTerm is given
+          in the request, it will be added into the filter parameter to match the
+          SOLR data. If the searchTerm is not given correctly in the request (for
+          example, Addias instead of Adidas), spellcheck will be done to match the
+          correct word. If there is a matched word in SOLR, the correct word Adidas
+          will be added automatically to the filter to match the SOLR data.
+      suggestion:
+        description: Indicates a response parameter which holds suggestions. If a
+          user gives incorrect spelling in the search term request, the correct suggestions
+          will be responded.
+    size:
+      description: The number of documents being retrieved on the corresponding page
+        specified by the page parameter.
+    bearerToken:
+      description: Holds a valid token which can be generated by Skava Auth microservice (or a third-party service) when authenticating the user’s identity and password. 
+        A valid token indicates the user is authenticated successfully. 
+        This token holds an expiry time.
+    x-auth-token:
+      description: Holds a valid authorization token generated using the Authorization microservice for a user.
+        The Auth Token (JWT format) represents claims containing the roles and privileges of the user accessing this API.
+        The JSON Web Token (JWT) is an open standard (RFC 7519)that defines a compact and self-contained way for securely transmitting information between parties as a JSON object.
+        Since the token is a required field for this API, it has to be generated beforehand by invoking the /auth/sessions API provided by Authorization microservice.
+        The output is three Base64 strings separated by dots that can be easily passed in the HTML and HTTP environments while being more compact when compared to XML-based standards such as SAML. 
+        Thus, the generated token has to be passed to this service and the request will be processed only if the following conditions are met:<br/><br/><ul>
+        <li>Token validation against the secret key</li>
+        <li>Expiry time should be in the future</li><li>Necessary privileges are available for the user to perform the action on the subjected resource</li></ul>
+    storeId:
+      description: Holds a valid store identifier. The store is an entity which binds
+        different micro-services together to provide a storefront experience. Different
+        microservices are associated with the store. This identifier is used to fetch
+        the association of various microservices. The fetched association is passed
+        to the calls for further processing. The value should not be empty or null.
+        It should be greater than 0.
+    x-version:
+      description: Refers to the API version of the microservice. It is an optional
+        parameter.

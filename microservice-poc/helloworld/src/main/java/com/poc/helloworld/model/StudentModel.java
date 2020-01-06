@@ -8,14 +8,14 @@
  * 
  * For further information contact Skava at info@skava.com.
  ******************************************************************************/
-package com.poc.helloworld.getandsetmodel;
+package com.poc.helloworld.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class GetterAndSetterModel {
+public class StudentModel {
 
   private int id;
   private String name;

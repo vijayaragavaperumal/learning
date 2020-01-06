@@ -5,4 +5,4 @@
  * @author Vijayaragavaperumal
  *
  */
-package com.poc.helloworld.getandsetmodel;
+package com.poc.helloworld.model;

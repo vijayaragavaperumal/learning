@@ -1,3 +1,15 @@
+/*Remove the adds element STRAT*/
+
+/*var addId = document.querySelector('[id^="google_ads_"]');
+addId && addId.remove();*/
+
+	document.querySelectorAll('[id^="google_ads_"]').forEach(function(element){
+		element.remove();
+	});
+
+/*Remove the adds element END*/
+
+/*HIDE the adds element through inject the css using javascript (inline css) START*/
 var style = document.createElement('style');
 style.innerHTML =
 	'.some-element {' +
@@ -14,4 +26,6 @@ style.innerHTML =
 	
 var ref = document.querySelector('script');
 ref.parentNode.insertBefore(style, ref);
+/*HIDE the adds element through inject the css using javascript (inline css) END*/
+
 

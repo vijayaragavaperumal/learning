@@ -1,0 +1,28 @@
+<rest tag="Splitter" xmlns="http://camel.apache.org/schema/spring"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+  <description>Split component Test</description>
+  <get uri="/splitter">
+    <description>Simple Aggregation</description>
+    <route id="splitter">
+
+      <to uri="direct:getTestTokens" />
+      <process ref="tokenResponseProcessor" />
+
+      <process ref="splitRequestProcessor" />
+      <split parallelProcessing="true"
+        strategyRef="catalogsModelsAggregateProcessor">
+        <simple>${header.paginate}</simple>
+
+        <setProperty propertyName="page">
+          <simple>${body}</simple>
+        </setProperty>
+        <setProperty propertyName="size">
+          <simple>2</simple>
+        </setProperty>
+
+        <to uri="direct:findAllModels" />
+      </split>
+    </route>
+  </get>
+</rest>

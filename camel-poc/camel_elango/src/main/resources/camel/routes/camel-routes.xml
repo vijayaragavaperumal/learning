@@ -1,0 +1,45 @@
+<routes xmlns="http://camel.apache.org/schema/spring"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+  <route id="direct:getTestTokens">
+    <from uri="direct:getTestTokens" />
+
+    <setHeader headerName="Exchange.HTTP_PATH">
+      <simple></simple>
+    </setHeader>
+    <setHeader headerName="Exchange.HTTP_QUERY">
+      <simple></simple>
+    </setHeader>
+    <setHeader headerName="CamelHttpMethod">
+      <constant>GET</constant>
+    </setHeader>
+    <setHeader headerName="Exchange.HTTP_URI">
+      <simple>https://int.skavacommerce.com/catalogservices/getTestTokens</simple>
+    </setHeader>
+
+    <to uri="{{skava.component.http.uri}}" />
+  </route>
+
+  <route id="direct:findAllModels">
+    <from uri="direct:findAllModels" />
+
+    <setHeader headerName="Exchange.HTTP_PATH">
+      <simple></simple>
+    </setHeader>
+    <setHeader headerName="Exchange.HTTP_QUERY">
+      <simple>page=${exchangeProperty.page}&amp;size=${exchangeProperty.size}</simple>
+    </setHeader>
+    <setHeader headerName="CamelHttpMethod">
+      <constant>GET</constant>
+    </setHeader>
+    <setHeader headerName="x-collection-id">
+      <simple>16</simple>
+    </setHeader>
+
+    <setHeader headerName="Exchange.HTTP_URI">
+      <simple>https://int.skavacommerce.com/catalogservices/models/</simple>
+    </setHeader>
+    <to uri="{{skava.component.http.uri}}" />
+  </route>
+</routes>

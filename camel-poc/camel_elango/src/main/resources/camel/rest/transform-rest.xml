@@ -1,0 +1,70 @@
+<rest tag="Transform" xmlns="http://camel.apache.org/schema/spring"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+  <description>Transform content</description>
+  <get uri="/filetransform">
+    <description>Simple transform Using file component</description>
+    <param name="text" type="query" dataType="string"
+      required="true" description="Input String" />
+    <responseMessage message="Success"
+      responseModel="java.lang.String" code="200"></responseMessage>
+
+    <route id="simpletransform">
+      <setBody>
+        <simple>${in.headers.text.toUpperCase()}</simple>
+      </setBody>
+      <to uri="file://d:/usr/local/skava/camel/?fileName=camel.txt"></to>
+    </route>
+  </get>
+
+  <get uri="/rightToVote">
+    <description>Choice Example</description>
+    <param name="age" type="query" dataType="number"
+      required="true" description="Input String" />
+    <responseMessage message="Success"
+      responseModel="java.lang.String" code="200"></responseMessage>
+
+    <route id="rightToVote">
+      <choice>
+        <when>
+          <simple>${header.age} >= 18</simple>
+          <transform>
+            <simple>Rights to vote</simple>
+          </transform>
+        </when>
+        <otherwise>
+          <transform>
+            <simple>No rights to vote</simple>
+          </transform>
+        </otherwise>
+      </choice>
+    </route>
+  </get>
+
+  <get uri="/apiTransform">
+    <description>API request transformation</description>
+    <param name="page" type="query" dataType="integer"
+      required="true" description="Page" />
+    <param name="size" type="query" dataType="integer"
+      required="true" description="Size" />
+    <responseMessage message="Success"
+      responseModel="com.skava.camel.aggregate.CatalogMicroserviceModelsAPIResponse"
+      code="200"></responseMessage>
+
+    <route id="apitransform">
+      <to uri="direct:getTestTokens" />
+      <process ref="tokenResponseProcessor" />
+
+      <setProperty propertyName="page">
+        <simple>${header.page}</simple>
+      </setProperty>
+      <setProperty propertyName="size">
+        <simple>${header.size}</simple>
+      </setProperty>
+
+      <to uri="direct:findAllModels" />
+      <process ref="catalogsModelsResponseProcessor" />
+      <removeHeader headerName="x-auth-token"></removeHeader>
+    </route>
+  </get>
+</rest>

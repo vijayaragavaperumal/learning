@@ -1,0 +1,15 @@
+<rest tag="ping" xmlns="http://camel.apache.org/schema/spring"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+  <description>Camel Test</description>
+  <get uri="/ping">
+    <description>Ping</description>
+    <responseMessage message="Success"
+      responseModel="java.lang.String" code="200"></responseMessage>
+    <route>
+      <transform>
+        <simple>Admin Orchestration services ping ${date:now:yyyy-MMM-dd HH:mm:ss}</simple>
+      </transform>
+    </route>
+  </get>
+</rest>

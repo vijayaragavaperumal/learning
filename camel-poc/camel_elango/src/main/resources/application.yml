@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: camel
+  cloud:
+    zookeeper:
+      config:
+        enabled: false
+      enabled: false
+camel:
+  component:
+    servlet:
+      mapping:
+        context-path: /services/*
+  springboot:
+    xmlRests: classpath*:**/*-rest.xml
+    xmlRoutes: classpath*:**/*-routes.xml
+    jmx-enabled: true
+org:
+  apache:
+    camel:
+      jmx:
+        disabled: true
+server:
+  servlet:
+    contextPath: /admin
+  domain: localhost
+  port: 8080
+swagger:
+  server:
+    contextPath: ${server.servlet.contextPath}/services
+    domain: ${server.domain}
+    port: ${server.port}
+    scheme: http
+    apiVersion: 0.0.1
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /services/v2/api-docs
+skava:
+  component:
+    http:
+      uri: http4://dummy/?throwExceptionOnFailure=false&connectTimeout=30000&socketTimeout=60000&connectionsPerRoute=75&maxTotalConnections=1350

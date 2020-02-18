@@ -1,0 +1,34 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+  <camelContext id="camel"
+    xmlns="http://camel.apache.org/schema/spring" trace="true">
+    <!-- Swagger documentation API endpoint -->
+    <restConfiguration component="servlet"
+      host="{{swagger.server.domain}}" port="{{swagger.server.port}}"
+      scheme="{{swagger.server.scheme:http}}" bindingMode="json"
+      contextPath="{{swagger.server.contextPath}}"
+      apiContextPath="/v2/api-docs" enableCORS="false">
+      <dataFormatProperty key="prettyPrint"
+        value="true" />
+      <apiProperty key="schemes"
+        value="{{swagger.server.scheme:http}}" />
+      <apiProperty key="api.title"
+        value="AdminOrchestration API" />
+      <apiProperty key="api.version" value="8.6.0" />
+      <apiProperty key="api.description"
+        value="Skava AdminOrchestration Application" />
+      <apiProperty key="cors" value="false" />
+
+      <corsHeaders key="Access-Control-Allow-Origin"
+        value="*" />
+      <corsHeaders key="Access-Control-Allow-Methods"
+        value="GET, PUT, POST, DELETE, PATCH" />
+      <corsHeaders key="Access-Control-Allow-Headers"
+        value="Content-Type, Content-Range, Content-Disposition, Content-Description" />
+      <corsHeaders key="Access-Control-Allow-Credentials"
+        value="true" />
+    </restConfiguration>
+  </camelContext>
+</beans>

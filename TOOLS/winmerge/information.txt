@@ -1,0 +1,7 @@
+1. Open win merge using run command is "winmerge"
+
+2. Compare all the all files including all subfolder files enable and disble
+
+	---> EDIT(Menu) -> Options -> Shell Integration - Include Subfolders By Default[ENABLE/DISABLE]
+
+3. 	

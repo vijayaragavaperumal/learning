@@ -1,0 +1,6 @@
+netstat -ano | find ":8080" -  find the process listining port 8080
+
+Sample Output :
+		TCP    [::]:8080              [::]:0                 LISTENING       12216
+		
+taskkill /F /PID 12216 - Kill the process id for free the current port

@@ -9,7 +9,7 @@ addId && addId.remove();*/
 
 /*Remove the adds element END*/
 
-/*HIDE the adds element through inject the css using javascript (inline css) START*/
+/*HIDE the adds element through inject the css using javascript (inline css) START */
 var style = document.createElement('style');
 style.innerHTML =
 	'.some-element {' +

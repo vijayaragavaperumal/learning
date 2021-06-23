@@ -1,0 +1,53 @@
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <route id="debugCommonRoute">
+        <from uri="direct:debugCommonRoute"/>
+        <setProperty propertyName="HttpRequest">
+            <simple>true</simple>
+        </setProperty>
+        <process ref="routeDebugProcessor" />
+        <setProperty propertyName="HttpRequest">
+            <simple>false</simple>
+        </setProperty>
+        <to uri="direct:debugRequestBody"/>
+        <setProperty propertyName="HttpResponse">
+            <simple>true</simple>
+        </setProperty>
+        <process ref="routeDebugProcessor" />
+        <setProperty propertyName="HttpResponse">
+            <simple>false</simple>
+        </setProperty>
+    </route>
+    
+    <route id="debugRequestBody">
+        <from uri="direct:debugRequestBody" />
+        <setProperty propertyName="isHttpRequest">
+            <simple>true</simple>
+        </setProperty>
+        <process ref="routeDebugProcessor" />
+        <setProperty propertyName="isHttpRequest">
+            <simple>false</simple>
+        </setProperty>
+    </route>
+    
+    <route id="debugBeforeHttpComponent">
+        <from uri="direct:debugBeforeHttpComponent" />
+        <setProperty propertyName="isBeforeHttp">
+            <simple>true</simple>
+        </setProperty>
+        <process ref="routeDebugProcessor" />
+        <setProperty propertyName="isBeforeHttp">
+            <simple>false</simple>
+        </setProperty>
+    </route>
+    
+    <route id="debugHttpResponse">
+        <from uri="direct:debugHttpResponse" />
+        <setProperty propertyName="isHttpResponse">
+            <simple>true</simple>
+        </setProperty>
+        <process ref="routeDebugProcessor" />
+        <setProperty propertyName="isHttpResponse">
+            <simple>false</simple>
+        </setProperty>
+    </route>
+</routes>

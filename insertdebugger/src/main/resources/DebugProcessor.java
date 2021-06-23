@@ -15,11 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.skava.cart.orchestration.model.Promotion;
-import com.skava.cart.orchestration.model.PromotionBreakUp;
-import com.skava.cart.orchestration.model.PromotionDetails;
-import com.skava.cart.orchestration.model.PromotionType;
-import com.skava.cart.orchestration.model.SFCart;
+
 
 /**
  * <p>The class debugProcessor</p>
@@ -40,29 +36,7 @@ public class DebugProcessor implements Processor {
     LOGGER.debug("DebugProcessor Process Start");
 
     ObjectMapper mapper = new ObjectMapper();
-    
-    /*SFCart sfCart = exchange.getProperty("sfcart", SFCart.class);
-    PromotionDetails promoDetails = sfCart.getPromotionDetails();
-    List<Promotion> promotionList  = promoDetails.getPromotions();
-    
-    Map<String,String> promoCodeToRewardMap = (Map<String, String>) exchange.getProperty("promoCodeToRewardMap");
-    
-    Map<String, String> properties = new HashMap<>();
-    
-    for(Promotion promotion : promotionList) {
-      if(promotion.getType().equals(PromotionType.CART)) {
-        List<PromotionBreakUp> breakupList = promotion.getBreakup();
-        for(PromotionBreakUp breakup : breakupList) {
-          if(promoCodeToRewardMap.get(breakup.getCode()) != null) {
-            properties.put(breakup.getIdentifier(), promoCodeToRewardMap.get(breakup.getCode()));
-          }
-        }
-        break;
-      }
-    }
-    
-    exchange.getIn().setBody(properties);*/
-    
+      
     /*JSONObject jsonObject = new JSONObject(exchange.getIn().getBody());
     jsonObject.toString();*/
     LOGGER.debug("DebugProcessor Process End");

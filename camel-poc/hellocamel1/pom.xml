@@ -30,7 +30,7 @@
     <properties>
         <hellocamelVersion>8.6.0</hellocamelVersion>
         <projectFinalVersion>${hellocamelVersion}-SNAPSHOT</projectFinalVersion>
-        <camel.version>2.22.0</camel.version>
+        <camel.version>2.25.1</camel.version>
         <lombok.version>1.16.20</lombok.version>
         <json.version>20180130</json.version>
         <jacoco.version>0.8.1</jacoco.version>

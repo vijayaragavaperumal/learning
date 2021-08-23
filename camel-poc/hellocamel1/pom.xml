@@ -39,7 +39,7 @@
         <springfox.version>2.8.0</springfox.version>
         <qpid.version>6.1.2</qpid.version>
         <esapi.version>2.1.0</esapi.version>
-        <jsoup.version>1.10.2</jsoup.version>
+        <jsoup.version>1.14.2</jsoup.version>
 
         <build.dev.classifier>SNAPSHOT</build.dev.classifier>
         <build.prod.classifier>RELEASE</build.prod.classifier>
